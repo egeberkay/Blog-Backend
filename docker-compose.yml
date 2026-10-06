@@ -3,10 +3,10 @@ services:
   db:
     image: postgres:latest
     ports:
-      - "5432:5432"
+      - "5433:5432"
     restart: always
     environment:
-      POSTGRES_PASSWORD: "123456"
+      POSTGRES_PASSWORD: "blogpass2026"
 
   #Database Management interface
   adminer:

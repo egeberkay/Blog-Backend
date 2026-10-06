@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @RequiredArgsConstructor
+
 public class BlogUserDetailsServers implements UserDetailsService {
     private final UserRepository userRepository;
 
