@@ -1,6 +1,7 @@
 package com.egeberkayyesil.blog.services.impl;
 
 import com.egeberkayyesil.blog.services.AuthenticationServices;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -48,6 +49,22 @@ public class AuthenticationServiceImpl implements AuthenticationServices {
                 .signWith(getSigninKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+
+    @Override
+    public UserDetails validateToken(String token) {
+       String userName = extractUserName(token);
+       return userDetailsService.loadUserByUsername(userName);
+    }
+
+    private String extractUserName(String token){
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(getSigninKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.getSubject();
+    }
+
     private Key getSigninKey(){
         byte[]  keyBytes = secretKey.getBytes();
         return Keys.hmacShaKeyFor(keyBytes);
